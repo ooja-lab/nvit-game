@@ -16,8 +16,8 @@ spec:
         app: nvit-game
     spec:
       containers:
-        - name: nvit-app
-          image: davidokpe/nvit-game
+        - name: nvit-game
+          image: ooja/nvit-app
           ports:
             - containerPort: 5000
 
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nvit-app-service
+  name: nvit-game
   namespace: default  # Update this if you have a specific namespace
 spec:
   type: NodePort
