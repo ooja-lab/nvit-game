@@ -1,9 +1,10 @@
+
 pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = 'dockerhub-repo'
-        IMAGE_NAME = 'ooja/nvit-game'
-        REPO_URL = 'https://github.com/ooja-lab/nvit-game.git'
+        IMAGE_NAME = 'davidokpe/nvit-game'
+        REPO_URL = 'https://github.com/ugbasawo/nvit-game.git'
     }
     stages {
         stage('Git Checkout') {
@@ -28,6 +29,14 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     sh 'docker push ${IMAGE_NAME}'
+                }
+            }
+        }
+        stage('Deploy with manifest.yaml') {
+            steps {
+                script {
+                    // Deploy using the manifest.yaml file
+                    sh 'kubectl apply -f manifest.yaml'
                 }
             }
         }
